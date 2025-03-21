@@ -6,27 +6,34 @@ import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import {getCoordinatesByLocationName} from "../services/service.js"
 import { City } from '@/interfaces/interface'
+import CurrentWeather from './CurrentWeather'
+import ForecastWeather from './ForecastWeather'
 
 const Searchbox =()=> {
 
   const [cityNameSearch, setCityNameSearch] = useState<string>('');
+
+  // city Interface
   const [cityData,setCityData] = useState<City>({
-    name:'',
-    lat:0,
-    lon:0,
-    state:'',
-    country:''
+    name:'Stockton',
+    lat:37.9577016,
+    lon:121.2907796,
+    state:'California',
+    country:'US'
   })
 
 
+
     const getCoordinatesData = async (cityNameSearch : string)=>{
-      // const coordinatesData = await getCoordinatesByLocationName(cityNameSearch);
       setCityData( await getCoordinatesByLocationName(cityNameSearch))
+     
       console.log(setCityData);
       console.log(cityData.country);
   
     };
 
+    
+   
 
   return (
     <>
@@ -36,10 +43,26 @@ const Searchbox =()=> {
 <FontAwesomeIcon icon={faMagnifyingGlass} onClick={()=>getCoordinatesData(cityNameSearch)} className='pe-5 text-gray-600' />
 </div>
 <div className='flex gap-5 text-3xl text-secondary-foreground'>
-<FontAwesomeIcon icon={faStar} />
-<p>{cityData.name},{cityData.state},{cityData.country}</p>
-<i className="wi wi-night-sleet"></i>
+{/* <FontAwesomeIcon icon={faStar} /> */}
+<div>
+
 </div>
+<div className='flex'>
+<p>{cityData.name}</p>
+
+{/*if state exists display*/}
+{cityData.state !=null && <p>, {cityData.state}</p>}
+
+<p>, {cityData.country}</p>
+
+</div>
+
+</div>
+
+<CurrentWeather cityData={cityData}/>
+
+<ForecastWeather cityData={cityData}/>
+
     </>
 
 

@@ -1,14 +1,14 @@
 import { APIKEY } from "./environment";
 
 export const getCoordinatesByLocationName = async (locationName)=>{
-    const promise = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationName}&limit=5&appid=${APIKEY}`);
+    const promise = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationName}&limit=5&appid=${APIKEY}`,{cache:"force-cache"});
     const data= await promise.json(); // transforms it to a json format
-
+    console.log(data);
     return data[0];
   }
 
 export const getCityNameByCoordinates = async (latitude,longitude)=>{
-    const promise = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${APIKEY}`);
+    const promise = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${APIKEY}`,{cache:"force-cache"});
     const data= await promise.json(); // transforms it to a json format
     if (data.length>0)
         {
@@ -36,60 +36,20 @@ export const getCityNameByCoordinates = async (latitude,longitude)=>{
 export const getCurrentWeatherData = async (latitude,longitude)=>{
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=imperial`); //for Farenheit units
     const data= await promise.json(); // transforms it to a json format
-    
-    //icon
-    let iconCode = data.weather[0].icon; // accesss first weather condition as it is the primary if multiple weather condition is returned
-    
-    currentIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    
-    // Access the Unix timestamp from the 'dt' field
-    const timestamp = data.dt;
-    
-    // Convert the timestamp to a JavaScript Date object
-    const date = new Date(timestamp * 1000); 
-    
-    // Display the formatted date
-    currentDate.innerText=date.toLocaleString('en-US', {
-        weekday: 'long', // e.g., "Monday"
-        month: 'long',   // e.g., "December"
-        day: 'numeric'   // e.g., "13"
-    }); 
-    
-    currentTemp.innerText=data.weather[0].description;
-    
-       currentWeather.innerText=`${data.main.temp}°F`;
-       currentMax.innerText=`High: ${data.main.temp_max}°F`;
-       currentMin.innerText=`Low: ${data.main.temp_min}°F`;
-    
-    
-       //update favorites icon 
-       let favoritesArr= getFavorites();
-       if (favoritesArr.includes(currentCityName.innerText))
-        {
-            addFavoriteIcon.classList.remove("active");
-            addFavoriteIcon.classList.add("inactive");
-    
-            removeFavoriteIcon.classList.remove("inactive");
-            removeFavoriteIcon.classList.add("active");
-        }
-        else{ //if it does not exist as favorite 
-            removeFavoriteIcon.classList.remove("active");
-            removeFavoriteIcon.classList.add("inactive");
-        
-            //add  add fav icon
-            addFavoriteIcon.classList.remove("inactive");
-            addFavoriteIcon.classList.add("active");
-        }
-    
+    // console.log("IN SERVICE"+ data.weather[0].description);
+    return data;
+   
      }
     
 export const get5DayForecastData= async(latitude,longitude)=>{
       
-       const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=imperial`);
+       const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=imperial`,{cache:"force-cache"});
        const data= await promise.json(); // transforms it to a json format
       
-       //forecast data population in UI
-       for (let i=0; i<5;i++)// because we only want the top 5 entries of the returned json data
+    return data;
+
+        //forecast data population in UI
+        for (let i=0; i<5;i++)// because we only want the top 5 entries of the returned json data
         {
     
             let varDayName =   `forecast${i}Day`;
