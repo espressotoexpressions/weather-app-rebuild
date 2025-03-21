@@ -10,4 +10,5 @@ TailWind
 
 
 
-//Peer Reviewed by: 
+// Peer Reviewed by: Alexander Soria
+// Review: Your page works just fine, just lacks the favorites list. Your page is very nearly identical to the original figma design, which is good. However, it does lack responsiveness for a mobile version. But overall, it works pretty well!
