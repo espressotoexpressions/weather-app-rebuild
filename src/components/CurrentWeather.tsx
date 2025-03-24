@@ -48,7 +48,7 @@ useEffect(()=>{
     <div className='grid grid-cols-3 space-x-5 border-b-1 pb-5 '>
         <div className='flex flex-col justify-center items-center '>
         <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt="" className='h-full'/>
-         <p className='text-3xl uppercase tracking-widest'>{weatherDesc}</p>
+         <p className='text-3xl uppercase tracking-widest text-center'>{weatherDesc}</p>
         </div>
         <div className='flex flex-col justify-center'>
         <p className='text-7xl text-center'>{Math.round(currentTemp)}</p>

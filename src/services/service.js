@@ -1,4 +1,4 @@
-import { APIKEY } from "./environment";
+import { APIKEY } from "./environment.env";
 
 export const getCoordinatesByLocationName = async (locationName)=>{
     const promise = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationName}&limit=5&appid=${APIKEY}`,{cache:"force-cache"});
